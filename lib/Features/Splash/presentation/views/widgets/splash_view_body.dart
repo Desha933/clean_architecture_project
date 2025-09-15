@@ -39,7 +39,9 @@ class _SplashViewbodyState extends State<SplashViewbody>
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Image.asset(AssetsData.logo),
+        GestureDetector(
+            // onTap: () => GoRouter.of(context).push(AppRouter.kHomeView),
+            child: Image.asset(AssetsData.logo)),
         const SizedBox(
           height: 4,
         ),
@@ -70,7 +72,7 @@ class _SplashViewbodyState extends State<SplashViewbody>
         //     transition: Transition.fade,
         //     duration: kTranstionDuration);
 
-        GoRouter.of(context).push(AppRouter.kHomeView);
+        GoRouter.of(context).pushReplacement(AppRouter.kHomeView);
       },
     );
   }

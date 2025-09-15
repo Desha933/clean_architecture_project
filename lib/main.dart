@@ -34,14 +34,14 @@ class Bookly extends StatelessWidget {
             FetchNewestBooksUseCase(
               getIt.get<HomeReposImpl>(),
             ),
-          ),
+          )..fetchFeaturedBook(),
         ),
         BlocProvider<FetchNewestBookCubit>(
           create: (context) => FetchNewestBookCubit(
             FetchNewestBooksUseCase(
               getIt.get<HomeReposImpl>(),
             ),
-          ),
+          )..fetchNewestBooks(),
         ),
       ],
       child: MaterialApp.router(

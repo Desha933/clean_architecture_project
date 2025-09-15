@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:bookly/Features/home/domain/use_case/fetch_newest_books_use_case.dart';
 import 'package:bookly/Features/home/presentation/manager/fetch_featured_book_cubit/fetch_featured_book_state.dart';
@@ -7,12 +9,20 @@ class FetchFeaturedBookCubit extends Cubit<FetchFeaturedBookState> {
       : super(FetchFeaturedBookInitial());
   FetchNewestBooksUseCase fetchNewestBooksUseCase;
 
-  Future<void> fetchFeaturedBook() async {
-    emit(FetchFeaturedBookLoading());
+  Future<void> fetchFeaturedBook({int pageNumber = 0}) async {
+    if (pageNumber == 0) {
+      emit(FetchFeaturedBookLoading());
+    } else {
+      emit(FetchFeaturedBookPaginationLoading());
+    }
 
-    var result = await fetchNewestBooksUseCase.call();
+    var result = await fetchNewestBooksUseCase.call(pageNumber);
 
-    result.fold((failure) => emit(FetchFeaturedBookFailure(failure.message)),
-        (books) => emit(FetchFeaturedBookSuccess(books)));
+    result.fold((failure) {
+      if (pageNumber == 0) {
+        emit(FetchFeaturedBookFailure(failure.message));
+      }
+      emit(FetchFeaturedBookPaginationFailure(failure.message));
+    }, (books) => emit(FetchFeaturedBookSuccess(books)));
   }
 }

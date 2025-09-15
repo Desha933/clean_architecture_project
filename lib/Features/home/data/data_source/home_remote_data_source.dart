@@ -7,7 +7,7 @@ import 'package:dartz/dartz_unsafe.dart';
 import 'package:hive_flutter/adapters.dart';
 
 abstract class HomeRemoteDataSource {
-  Future<List<BookEntity>> fetchFeaturedBooks();
+  Future<List<BookEntity>> fetchFeaturedBooks({int pageNumber = 0});
   Future<List<BookEntity>> fetchNewestBooks();
 }
 
@@ -17,9 +17,10 @@ class HomeRemoteDataSourceImplement extends HomeRemoteDataSource {
   HomeRemoteDataSourceImplement(this.apiService);
 
   @override
-  Future<List<BookEntity>> fetchFeaturedBooks() async {
+  Future<List<BookEntity>> fetchFeaturedBooks({int pageNumber = 0}) async {
     var data = await apiService.get(
-        endpoint: 'volumes?Filtering=free-ebooks&q=programming');
+        endpoint:
+            'volumes?Filtering=free-ebooks&q=programming&startIndex=${pageNumber * 10}');
     List<BookEntity> books = convertBookModelToBookEntity(data);
 
     saveDataToHiveBox(books, kFeaturedBox);

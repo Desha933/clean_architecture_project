@@ -1,7 +1,11 @@
+import 'package:bookly/Features/home/presentation/manager/fetch_featured_book_cubit/fetch_featured_book_cubit.dart';
+import 'package:bookly/Features/home/presentation/manager/fetch_featured_book_cubit/fetch_featured_book_state.dart';
+import 'package:bookly/Features/home/presentation/views/widgets/bloc_builder_featured_books_list.dart';
 import 'package:bookly/constants.dart';
 import 'package:bookly/core/utils/assets.dart';
 import 'package:bookly/core/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'best_seller_list_view.dart';
 import 'best_seller_list_view_item.dart';
@@ -24,7 +28,7 @@ class HomeViewBody extends StatelessWidget {
                     horizontal: 30,
                   ),
                   child: CustomAppBar()),
-              FeaturedBooksListView(),
+              const BlocBuilderFeaturedBooks(),
               SizedBox(
                 height: 50,
               ),
